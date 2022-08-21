@@ -23,15 +23,12 @@ class _GamePageState extends State<GamePage> {
     setState(() {
       _showTestButton = !_showTestButton;
     });
-
-    print('Button clicked!');
     print(_controller.text);
     var guess = int.tryParse(_controller.text);
     if (guess == null) {
-      // แจ้ง error
-      print('Input error');
+      //error
       setState(() {
-        _feedbackText = 'Input error, please try again';
+        _feedbackText = 'Please enter a value to convert.';
       });
     } else {
       var result = _game.doGuess(guess);
@@ -43,7 +40,7 @@ class _GamePageState extends State<GamePage> {
         });
       } else if (result == Result.tooLow) {
         // ทายน้อยไป
-        print('Too low');
+
         setState(() {
           _feedbackText = 'Too low, please try again';
         });
@@ -61,35 +58,55 @@ class _GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Guess the Number'),
+        title: const Text('Midterm Exame'),
       ),
-      body: Center(
+      body: Container(
+        padding: const EdgeInsets.all(8.0),
+        margin: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Text('Please enter number between 1 and 100'),
+            Text('Temperature Converter', style: TextStyle(fontSize: 25.0, fontStyle: FontStyle.italic)),
+
             TextField(
               controller: _controller,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter a number',
+                hintText: 'Enter a temperature value to convert',
               ),
             ),
             // Callback function
             ElevatedButton(
               onPressed: handleClickGuess,
-              child: const Text('GUESS'),
+              child: const Text('Celsius to Fahrenheit'),
             ),
-            Text(_feedbackText),
 
             ElevatedButton(
-              style: OutlinedButton.styleFrom(
-                backgroundColor: _showTestButton ? Colors.green : Colors.red,
-              ),
-              onPressed: () {},
-              child: const Text('TEST'),
+              onPressed: handleClickGuess,
+              child: const Text('Celsius to Kelvin'),
             ),
-            Icon(_showTestButton ? Icons.print : Icons.access_time_rounded),
+
+            ElevatedButton(
+              onPressed: handleClickGuess,
+              child: const Text('Fahrenheit to Celsius'),
+            ),
+
+            ElevatedButton(
+              onPressed: handleClickGuess,
+              child: const Text('Fahrenheit to Kelvin'),
+            ),
+
+            ElevatedButton(
+              onPressed: handleClickGuess,
+              child: const Text('Kelvin to Celsius'),
+            ),
+
+            ElevatedButton(
+              onPressed: handleClickGuess,
+              child: const Text('Kelvin to Fahrenheit'),
+            ),
+
+            Text(_feedbackText),
           ],
         ),
       ),
